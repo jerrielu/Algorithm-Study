@@ -1,0 +1,21 @@
+class Solution:
+    def countBattleships(self, board: List[List[str]]) -> int:
+        rows = len(board)
+        column = len(board[0])
+        visited = set()
+        result = 0
+        def dfs(board, i,j):
+            if (i,j) not in visited and i >= 0 and i < rows and j < column and j>=0 and board[i][j]=="X":
+                visited.add((i,j))
+                board[i][j]="."
+                dfs(board,i+1,j)
+                dfs(board,i-1,j)
+                dfs(board,i,j+1)
+                dfs(board,i,j-1)
+        for j in range(column):
+            for i in range(rows):
+                if board[i][j] == "X" and (i,j) not in visited:
+                    result += 1
+                    dfs(board,i,j)
+        return result
+                
